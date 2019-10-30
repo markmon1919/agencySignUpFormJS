@@ -180,6 +180,7 @@
 	function formatYearEstablished() {
 		$("div[data-id='"+dataId_yearEstablished+"']").find("input")
 			.on('keypress', function(e) {
+				console.log(dataId_yearEstablished);
 				var year = $(this);
 				var keyLimit = e.charCode || e.keyCode || 0;
 				if (year.val().length == 0 && keyLimit == 0) {
