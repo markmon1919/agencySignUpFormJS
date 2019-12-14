@@ -1,21 +1,20 @@
-/* STAGING */
+/* https://s3-us-west-2.amazonaws.com/userdata123/www/autoresponders/109/Attachment-109191.js */
 (function($){
 	window.addEventListener('load', function(){
         formatFields();
-        //return returnHiddenValue(); //for testing only hiddenValue
     });
 
-	var dataId_phone = '53954179';
-	var dataId_website = '53954203';
-	var dataId_eOLiabilityLimits = '53954205';
-	var dataId_eoLimitsHolder = '53954206';
+	var dataId_phone = '48735036';
+	var dataId_website = '47134557';
+	var dataId_eOLiabilityLimits = '49414122';
+	var dataId_eoLimitsHolder = '49465110';
 	var keyPressVal;
-	var dataId_yearEstablished = 53954202; //prod 47134549
-	var dataId_duplicateMessage = '53954176';
+	var dataId_duplicateMessage = '51143545';
 	
 	// for Search form 
-	var dataId_email = '51523792';
-	var dataId_hiddenReturnedAccount = 51523789;
+	var dataId_email = '51142095';
+	var dataId_hiddenForLoading = '51176317';
+	var dataId_hiddenAcctName = '51144461';
 	
 	function formatPhone(){
 		$("div[data-id='"+dataId_phone+"']").find("input")
@@ -54,6 +53,7 @@
 				// Allow numeric (and tab, backspace, delete) keys only
 				return (key == 8 ||			// backspace
 					key == 9 ||
+					// key == 46 ||			// delete and dot 
 					(key >= 48 && key <= 57));	//numeric
 			})
 			
@@ -63,10 +63,12 @@
 				
 				if (key !== 8 && key !== 9 && key >= 48 && key <= 57) {
 					if(keyPressVal==="("){
-						var currentKey = e.key;
-						if(currentKey.length==1 && currentKey!=="!"){
-							phone.val(keyPressVal+''+currentKey);
-						}
+						// setTimeout(function () {
+							var currentKey = e.key;
+							if(currentKey.length==1 && currentKey!=="!"){
+								phone.val(keyPressVal+''+currentKey);
+							}
+						// }, 5000);
 					}
 				}
 			})
@@ -157,6 +159,7 @@
 						var priceHolder = $("div[data-id='"+dataId_eoLimitsHolder+"']").find("input");
 						var priceHolderNumber = parseInt(input.replace("$","").replace(/,/g, ""));
 						
+						//priceHolder.val(priceHolderNumber);
 						loader.engine.document.getElementById(parseInt(dataId_eoLimitsHolder)).setProperty('value.value' , priceHolderNumber);
 						
 				}
@@ -179,24 +182,6 @@
 				}
 			});
 	}
-
-	function formatYearEstablished() {
-		$("div[data-id='"+dataId_yearEstablished+"']").find("input")         
- 			.on('keypress', function(e) {
-                var year = $(this);
-                var key = e.charCode || e.keyCode || 0;            
-                if (year.val().length == 0 && key == 48) {
-                	return false;	// zero not allowed as first digit
-                }
-                if (year.val().length >= 4) {
-                	year.val(year.val().slice(0, 3));
-                }
-				// Allow numeric (and tab, backspace, delete) keys only
-				return (key == 8 ||			// backspace
-					key == 9 ||
-					(key >= 48 && key <= 57));	//numeric
-        });
-	}
 	
 	function retrieveURL(){
 		var pageURL = $(location).attr("href");
@@ -204,24 +189,60 @@
 		duplicateMsg.val(pageURL);
 	}
 	
+	function disableSubmitButton(){
+		var formAttr = $("form").attr('data-form-id');
+		var hiddenForLoading = $("div[data-id='"+dataId_hiddenForLoading+"']").find("input");
+		
+		if(formAttr === '4657397'){ // if on search page 
+			// $("button[type=submit]").attr("disabled", "disabled");
+			hiddenForLoading.val('Submit must be disabled');
+		}
+		
+		$("div[data-id='"+dataId_hiddenAcctName+"']").find("input")
+			.change(function(){
+				alert("The text has been changed.");
+			})
+		
+		/*$("div[data-id='"+dataId_hiddenAcctName+"']").find("input")
+			.on('change', function(e) {
+				// var hiddenAcctName = $(this);
+				// hiddenForLoading.val('');
+				// var hiddenAcctName = $("div[data-id='"+dataId_hiddenAcctName+"']").find("input");
+				// alert(hiddenAcctName.val());
+				// alert('changed');
+			})*/
+		
+		/*$("div[data-id='"+dataId_hiddenAcctName+"']").find("input")
+			.on('change', function(e) {
+				var hiddenAcctName = $(this);
+				hiddenForLoading.val('');
+			})*/
+	}
+	
+	function disableComponents(){
+		$("div[data-id='"+dataId_email+"']").find("input")
+			.on('blur', function(e) {
+				var email = $(this);
+				var hiddenForLoading = $("div[data-id='"+dataId_hiddenForLoading+"']").find("input");
+				if(email.val().length > 0){
+					var attr = $("body").attr('data-is-loading');
+					if (typeof attr !== typeof undefined && attr !== false) {
+						// $(email).attr('disabled','true');
+						hiddenForLoading.val('Must be disabled');
+					}
+				}
+			})	
+	}
+	
+	
+	
 	function formatFields(){
 		// this will call all the formatters
 		formatPhone();
 		formatWebsite();
 		formatEOLiabilityLimits();
-		formatYearEstablished();
 		retrieveURL();
-	}
-    
-	function returnHiddenValue(){
-		var hiddenReturnedAccount = loader.getEngine().getDocument().getElementById(dataId_hiddenReturnedAccount);
-		$("div[data-id='"+dataId_email+"']").find("input")
-			.on('focus', function(e) {
-				console.log('hiddenReturnedAccount--->>> ' + JSON.stringify(hiddenReturnedAccount.getValue()));		
-			})
-			.on('blur', function(e) {
-				console.log('hiddenReturnedAccount--->>> ' + JSON.stringify(hiddenReturnedAccount.getValue()));
-			});			
+		// disableSubmitButton();
 	}
 	
 })(jQuery);

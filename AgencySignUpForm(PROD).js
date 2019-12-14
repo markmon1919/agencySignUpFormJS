@@ -1,9 +1,7 @@
-
-//https://s3-us-west-2.amazonaws.com/userdata123/www/autoresponders/109/Attachment-109191.js
-
 (function($){
 	window.addEventListener('load', function(){
         formatFields();
+        //return returnHiddenValue(); //for testing only hiddenValue
     });
 
 	var dataId_phone = '48735036';
@@ -11,6 +9,7 @@
 	var dataId_eOLiabilityLimits = '49414122';
 	var dataId_eoLimitsHolder = '49465110';
 	var keyPressVal;
+	var dataId_yearEstablished = 47134549;
 	var dataId_duplicateMessage = '51143545';
 	
 	// for Search form 
@@ -184,6 +183,24 @@
 				}
 			});
 	}
+
+	function formatYearEstablished() {
+		$("div[data-id='"+dataId_yearEstablished+"']").find("input")         
+ 			.on('keypress', function(e) {
+                var year = $(this);
+                var key = e.charCode || e.keyCode || 0;            
+                if (year.val().length == 0 && key == 48) {
+                	return false;	// zero not allowed as first digit
+                }
+                if (year.val().length >= 4) {
+                	year.val(year.val().slice(0, 3));
+                }
+				// Allow numeric (and tab, backspace, delete) keys only
+				return (key == 8 ||			// backspace
+					key == 9 ||
+					(key >= 48 && key <= 57));	//numeric
+        });
+	}	
 	
 	function retrieveURL(){
 		var pageURL = $(location).attr("href");
@@ -243,6 +260,7 @@
 		formatPhone();
 		formatWebsite();
 		formatEOLiabilityLimits();
+		formatYearEstablished();
 		retrieveURL();
 		// disableSubmitButton();
 	}
