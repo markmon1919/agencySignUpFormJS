@@ -15,7 +15,6 @@
 	// for Search form 
 	var dataId_email = '51523792';
 	var dataId_hiddenReturnedAccount = 51523789;
-	var dataId_checker = 62227210;
 	
 	function formatPhone(){
 		$("div[data-id='"+dataId_phone+"']").find("input")
@@ -25,7 +24,7 @@
 				
 				if (phone.val().length === 0) {
 					$("div[data-id='"+dataId_hiddenReturnedAccount+"']").val("");
-					phone.val(phone.val() + '(M');
+					phone.val(phone.val() + '(');
 				} else {
 					var val = phone.val();
 					phone.val('').val(val);
@@ -204,16 +203,16 @@
 		var duplicateMsg = $("div[data-id='"+dataId_duplicateMessage+"']").find("input");
 		duplicateMsg.val(pageURL);
 	}
-    
+	
 	function returnHiddenValue(){
-		//var hiddenReturnedAccount = loader.getEngine().getDocument().getElementById(dataId_hiddenReturnedAccount);
-		$("div[data-id='"+dataId_phone+"']").find("input").each(function(e) {
-			console.log($("div[data-id='"+dataId_hiddenReturnedAccount+"']").val(""););
-			if($(this).val() == "") {
-				$("div[data-id='"+dataId_hiddenReturnedAccount+"']").val("");
-			}
-		})
-
+		var hiddenReturnedAccount = loader.getEngine().getDocument().getElementById(dataId_hiddenReturnedAccount);
+		$("div[data-id='"+dataId_email+"']").find("input")
+			.on('focus', function(e) {
+				console.log('hiddenReturnedAccount--->>> ' + JSON.stringify(hiddenReturnedAccount.getValue()));		
+			})
+			.on('blur', function(e) {
+				console.log('hiddenReturnedAccount--->>> ' + JSON.stringify(hiddenReturnedAccount.getValue()));
+			});			
 	}
 
 	function formatFields(){
@@ -223,7 +222,7 @@
 		formatEOLiabilityLimits();
 		formatYearEstablished();
 		retrieveURL();
-		returnHiddenValue();
+		hiddenReturnedAccount
 	}
 	
 })(jQuery);
