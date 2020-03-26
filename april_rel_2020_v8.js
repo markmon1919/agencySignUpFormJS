@@ -25,7 +25,7 @@
 				
 				if (phone.val().length === 0) {
 					$("div[data-id='"+dataId_hiddenReturnedAccount+"']").val("");
-					phone.val(phone.val() + '(');
+					phone.val(phone.val() + '(M');
 				} else {
 					var val = phone.val();
 					phone.val('').val(val);
