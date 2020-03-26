@@ -15,6 +15,16 @@
 	// for Search form 
 	var dataId_email = '51523792';
 	var dataId_hiddenReturnedAccount = 51523789;
+	var dataId_hidden = 62230821;
+	var dataId_agency = 51523790;
+	
+	function populateAgency(){
+		$("div[data-id='"+dataId_agency+"']").find("input")
+ 			.on('keypress', function(e) {
+                	var agency = $(this);
+			agency.val($("div[data-id='"+dataId_agency+"']").val());
+        	});
+	}
 	
 	function formatPhone(){
 		$("div[data-id='"+dataId_phone+"']").find("input")
@@ -195,25 +205,13 @@
 				return (key == 8 ||			// backspace
 					key == 9 ||
 					(key >= 48 && key <= 57));	//numeric
-        });
+        	});
 	}
 	
 	function retrieveURL(){
 		var pageURL = $(location).attr("href");
 		var duplicateMsg = $("div[data-id='"+dataId_duplicateMessage+"']").find("input");
 		duplicateMsg.val(pageURL);
-	}
-	
-	function returnHiddenValue(){
-		var hiddenReturnedAccount = loader.getEngine().getDocument().getElementById(dataId_hiddenReturnedAccount);
-		$("div[data-id='"+dataId_email+"']").find("input")
-			.on('focus', function(e) {
-				console.log('hiddenReturnedAccount--->>> ' + JSON.stringify(hiddenReturnedAccount.getValue()));		
-			})
-			.on('blur', function(e) {
-				console.log('hiddenReturnedAccount--->>> ' + JSON.stringify(hiddenReturnedAccount.getValue()));
-				alert('hiddenReturnedAccount--->>> ' + JSON.stringify(hiddenReturnedAccount.getValue()));		
-			});			
 	}
 
 	function formatFields(){
@@ -223,7 +221,7 @@
 		formatEOLiabilityLimits();
 		formatYearEstablished();
 		retrieveURL();
-		returnHiddenValue();
+		populateAgency();
 	}
 	
 })(jQuery);
