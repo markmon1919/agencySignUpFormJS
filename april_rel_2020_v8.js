@@ -212,6 +212,7 @@
 			})
 			.on('blur', function(e) {
 				console.log('hiddenReturnedAccount--->>> ' + JSON.stringify(hiddenReturnedAccount.getValue()));
+				alert('hiddenReturnedAccount--->>> ' + JSON.stringify(hiddenReturnedAccount.getValue()));		
 			});			
 	}
 
@@ -222,7 +223,7 @@
 		formatEOLiabilityLimits();
 		formatYearEstablished();
 		retrieveURL();
-		hiddenReturnedAccount
+		returnHiddenValue();
 	}
 	
 })(jQuery);
