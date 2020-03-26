@@ -22,7 +22,7 @@
 		$("div[data-id='"+dataId_agency+"']").find("input")
  			.on('keypress', function(e) {
                 	var agency = $(this);
-			agency.val($("div[data-id='"+dataId_agency+"']").val());
+			$("div[data-id='"+dataId_agency+"']").val()) = agency.val();
         	});
 	}
 	
